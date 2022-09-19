@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-xs-12">
+      <button class="btn btn-success">Nouveau utilisateur</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+        <app-user-item
+          *ngFor="let recipeEl of recipes; let i = index"
+          [recipe]="recipeEl"
+          [index]="i"></app-user-item>
+      </div>
+  </div>
