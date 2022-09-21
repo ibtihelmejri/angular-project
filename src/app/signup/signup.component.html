@@ -6,6 +6,20 @@
           <div class="card-body p-5 text-center">
             <h2 class="mb-5">Créer un compte</h2>
 
+            <div *ngIf="isSuccess" class="alert alert-success" role="alert">
+              <h4 class="alert-heading">Succès!</h4>
+              <p>La création d'un nouveau compte a été effectuée avec succès </p>
+              
+            </div>
+
+            <div *ngIf="isFailed" class="alert alert-danger" role="alert">
+              <h4 class="alert-heading">Désolé!</h4>
+              <p>Merci de taper l'adresse mail suivante: eve.holt@reqres.in </p>
+              
+            </div>
+
+
+
             <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
               <div class="form-outline mb-4">
                 <div >
