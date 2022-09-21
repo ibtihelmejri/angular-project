@@ -8,21 +8,25 @@
           <div class="card-body p-5 text-center">
             <h2 class="mb-5">Se connecter</h2>
 
+           <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+
+          
             <div class="form-outline mb-4">
-              <!-- <input required type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="Email"/>
-                <label class="form-label" for="typeEmailX-2">Email</label> -->
+             
               <div class="shadow-lg">
                 <div class="input-group mb-3">
                   <div class="form-floating">
                     <input
                       type="text"
                       class="form-control"
-                      id="floatingInputGroup1"
-                      placeholder="Username"
+                      id="email"
+                      required
+                      email
+                      name="email"
+                      ngModel
                     />
-                    <label for="floatingInputGroup1">Email</label>
+                    <label for="email">Email</label>
                   </div>
-                  <!-- <span class="input-group-text">@</span> -->
                   <span class="input-group-text">
                     <div class="input-group-addon">
                       <i
@@ -40,10 +44,13 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="floatingInputGroup1"
-                      placeholder="Username"
+                      id="password"
+                      required
+                      ngModel
+                      name="password"
+                      minlength="8"
                     />
-                    <label for="floatingInputGroup1">Mot de passe</label>
+                    <label for="password">Mot de passe</label>
                   </div>
                   <span class="input-group-text">
                     <div class="input-group-addon">
@@ -90,14 +97,15 @@
                 class="btn btn-lg btn-block d-grid gap-2 col-6 mx-auto"
                 style="color: white; background-color: rgb(227, 162, 223)"
                 type="submit"
+                [disabled]="!authForm.valid"
               >
                 Se connecter
               </button>
             </div>
-
+          </form>
             <div class="mt-5">
               <label class="form-label" for="form1Example3">
-                Avez-vous un compte? <span style="color: rgb(227, 162, 223);"> S'inscrire</span>
+                Avez-vous un compte? <span style="color: rgb(227, 162, 223);"><a routerLink="/signup">S'inscrire</a> </span>
               </label>
             </div>
           </div>
