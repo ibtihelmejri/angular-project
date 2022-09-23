@@ -12,6 +12,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { UserDetailsComponent } from './user-management/user-details/user-details.component';
 import { UserListComponent } from './user-management/user-list/user-list.component';
 import { UserItemComponent } from './user-management/user-list/user-item/user-item.component';
+import { LoadingSpinnerComponent } from './communComponents/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UserItemComponent } from './user-management/user-list/user-item/user-it
     NavbarComponent,
     UserDetailsComponent,
     UserListComponent,
-    UserItemComponent
+    UserItemComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -8,12 +8,20 @@
           <div class="card-body p-5 text-center">
             <h2 class="mb-5">Se connecter</h2>
 
-           <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+<div *ngIf="isLoading">
+<app-loading-spinner></app-loading-spinner>
+</div>
 
-          
+            <div *ngIf="isFailed" class="alert alert-danger" role="alert">
+              <h4 class="alert-heading">Désolé!</h4>
+              <p>{{ error }}</p>
+              
+            </div>
+
+           <form #authForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
             <div class="form-outline mb-4">
              
-              <div class="shadow-lg">
+              <div>
                 <div class="input-group mb-3">
                   <div class="form-floating">
                     <input
@@ -24,6 +32,7 @@
                       email
                       name="email"
                       ngModel
+                      #email="ngModel"
                     />
                     <label for="email">Email</label>
                   </div>
@@ -36,9 +45,20 @@
                     </div>
                   </span>
                 </div>
+                  <span
+                  class="help-block errorStyle mt-4"
+                  *ngIf="email.errors?.['required'] && email.touched"
+                  > Ce champs est obligatoire</span>
+           
+              <span
+                class="help-block errorStyle mt-4"
+                *ngIf="email.errors?.['email'] && email.touched"
+                >Adresse mail invalide! Ex: eve.holt@reqres.in</span
+              >
+            </div>
               </div>
 
-              <div class="shadow-lg">
+              <div>
                 <div class="input-group mb-3">
                   <div class="form-floating">
                     <input
@@ -49,6 +69,8 @@
                       ngModel
                       name="password"
                       minlength="8"
+                      #password="ngModel"
+                      pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
                     />
                     <label for="password">Mot de passe</label>
                   </div>
@@ -62,14 +84,23 @@
                     </div>
                   </span>
                 </div>
-              </div>
+                <span
+                class="help-block errorStyle mt-4"
+                *ngIf="password.errors?.['required'] && password.touched"
+                > Ce champs est obligatoire</span>
+              <span
+                class="help-block errorStyle mt-4"
+                *ngIf="password.errors?.['pattern'] && password.touched"
+                >Un mot de passe est valide lorsqu'il contient au moins 1
+                caractère majuscule, au moins 1 caractère minuscule, au
+                moins 1 chiffre et au minimum 8 caractères</span
+              >
+              
             </div>
-
+            <!-- class="shadow-lg" -->
             <div class="form-outline mb-4">
-              <div class="shadow-lg">
-                <!-- <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Mot de passe" /> -->
-                <!-- <label class="form-label" for="typePasswordX-2">Password</label>
-               -->
+              <div>
+
               </div>
             </div>
             <!-- Checkbox -->

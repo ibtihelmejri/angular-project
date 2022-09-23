@@ -1,34 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { AuthService } from './auth.service';
-
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { NgForm } from "@angular/forms";
+import { AuthService } from "../services/auth.service";
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  selector: "app-auth",
+  templateUrl: "./auth.component.html",
+  styleUrls: ["./auth.component.css"],
 })
 export class AuthComponent implements OnInit {
+  @ViewChild("authForm") authForm: NgForm | undefined;
+  isFailed = false;
+  isLoading = false;
+  error: string = "";
+  constructor(private authService: AuthService) {}
 
-  constructor(private authService: AuthService ) { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  onSubmit() {
+    console.log(this.authForm?.form);
+    const email = this.authForm?.form.value.email;
+    const password = this.authForm?.form.value.password;
+    this.isLoading = true;
+    this.authService.onLogin(email, password).subscribe(
+      (resData) => {
+        console.log("response authentification", resData);
+        this.isLoading = false;
+      },
+      (errorMessage) => {
+        console.log('errorMessage',errorMessage);
+        
+        this.isLoading = false;
+        this.isFailed = true;
+        setTimeout(() => {
+          this.isFailed = false;
+        }, 6000);
+     
+        this.error = errorMessage;
+      }
+
+    );
+    this.authForm?.form.reset();
   }
-  
-  onSubmit(form: NgForm){
-console.log(form.value);
-const email = form.value.email;
-const password = form.value.password;
-this.authService.signup(email,password).subscribe(resData => {
-  console.log('resData',resData);
-  
-},
-error => {
-  console.log('error', error);
-  
-}
-)
-form.reset();
-  }
-
 }
