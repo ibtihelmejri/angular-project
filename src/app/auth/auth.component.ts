@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
 
 @Component({
+  
   selector: "app-auth",
   templateUrl: "./auth.component.html",
   styleUrls: ["./auth.component.css"],
@@ -12,7 +14,7 @@ export class AuthComponent implements OnInit {
   isFailed = false;
   isLoading = false;
   error: string = "";
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -25,6 +27,7 @@ export class AuthComponent implements OnInit {
       (resData) => {
         console.log("response authentification", resData);
         this.isLoading = false;
+        this.router.navigate(['/user-management']);
       },
       (errorMessage) => {
         console.log('errorMessage',errorMessage);
