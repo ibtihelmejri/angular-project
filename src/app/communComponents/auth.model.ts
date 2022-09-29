@@ -1,4 +1,4 @@
-export class Auth {
-    constructor(public email: string, public password: string) {}
+export class AuthToken {
+    constructor(public token: string) {}
   }
   
