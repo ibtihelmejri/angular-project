@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
   isFailed = false;
   isLoading = false;
   error: string = "";
+  success : string = "La création d'un nouveau compte a été effectuée avec succès"
 
   ngOnInit(): void {}
 
