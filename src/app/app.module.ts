@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {StoreModule} from '@ngrx/store'
+import {StoreModule} from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,8 +15,8 @@ import { UserItemComponent } from './user-management/user-list/user-item/user-it
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './communComponents/shared.module';
 import { SignupModule } from './signup/signup.module';
-import { authReducer } from './auth/store/auth.reducer';
 import { appReducer } from './store/app.reducer';
+import { AuthEffects } from './auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { appReducer } from './store/app.reducer';
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([AuthEffects]),
     FormsModule,
     AuthModule,
     SharedModule,
