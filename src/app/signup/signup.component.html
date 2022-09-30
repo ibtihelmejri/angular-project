@@ -1,4 +1,4 @@
- <section class="vh-100 bgImage">
+<section class="vh-100 bgImage">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -6,9 +6,26 @@
           <div class="card-body p-5 text-center">
             <h2 class="mb-5">Créer un compte</h2>
 
-            <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+            <!-- <div *ngIf="isSuccess" class="alert alert-success" role="alert">
+              <h4 class="alert-heading">Succès!</h4>
+              <p>La création d'un nouveau compte a été effectuée avec succès</p>
+            </div> -->
+
+            <app-alert [message]="success" [title]="'Succès!'" *ngIf="isSuccess"></app-alert>
+
+
+            <app-alert [message]="error" [title]="'Désolé!'" *ngIf="isFailed"></app-alert>
+
+            <div *ngIf="isLoading">
+              <app-loading-spinner></app-loading-spinner>
+            </div>
+            <form
+              #signupForm="ngForm"
+              (ngSubmit)="onSubmit()"
+              *ngIf="!isLoading"
+            >
               <div class="form-outline mb-4">
-                <div >
+                <div>
                   <div class="input-group mb-3">
                     <div class="form-floating">
                       <input
@@ -30,21 +47,23 @@
                           style="font-size: 1.5rem; color: rgb(227, 162, 223)"
                         ></i>
                       </div>
-                      
                     </span>
-                    
-
                   </div>
-                  <span class="help-block errorStyle mt-4" *ngIf="email.errors?.['required'] && email.touched">Champs obligatoire</span>
-                  <span class="help-block errorStyle mt-4" *ngIf="email.errors?.['email'] && email.touched">Adresse mail invalide! Ex: eve.holt@reqres.in</span>
-
+                  <span
+                    class="help-block errorStyle mt-4"
+                    *ngIf="email.errors?.['required'] && email.touched"
+                  >
+                    Ce champs est obligatoire</span
+                  >
+                  <span
+                    class="help-block errorStyle mt-4"
+                    *ngIf="email.errors?.['email'] && email.touched"
+                    >Adresse mail invalide! Ex: eve.holt@reqres.in</span
+                  >
                 </div>
 
-               
-
-
                 <div>
-                  <div class="input-group my-3 ">
+                  <div class="input-group my-3">
                     <div class="form-floating">
                       <input
                         type="text"
@@ -56,9 +75,6 @@
                         minlength="8"
                         #password="ngModel"
                         pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
-
-                        
-
                       />
                       <label for="password">Mot de passe</label>
                     </div>
@@ -72,9 +88,19 @@
                       </div>
                     </span>
                   </div>
-                  <span class="help-block errorStyle mt-4" *ngIf="password.errors?.['required'] && password.touched">Champs obligatoire</span>
-                  <span class="help-block errorStyle mt-4" *ngIf="password.errors?.['pattern'] && password.touched">Un mot de passe est valide lorsqu'il contient au moins 1 caractère majuscule, au moins 1 caractère minuscule, au moins 1 chiffre et au minimum 8 caractères</span>
-
+                  <span
+                    class="help-block errorStyle mt-4"
+                    *ngIf="password.errors?.['required'] && password.touched"
+                  >
+                    Ce champs est obligatoire</span
+                  >
+                  <span
+                    class="help-block errorStyle mt-4"
+                    *ngIf="password.errors?.['pattern'] && password.touched"
+                    >Un mot de passe est valide lorsqu'il contient au moins 1
+                    caractère majuscule, au moins 1 caractère minuscule, au
+                    moins 1 chiffre et au minimum 8 caractères</span
+                  >
                 </div>
               </div>
 
@@ -87,8 +113,7 @@
                   class="btn btn-lg btn-block d-grid gap-2 col-6 mx-auto"
                   style="color: white; background-color: rgb(227, 162, 223)"
                   type="submit"
-                  [disabled]="!signupForm.valid" 
-
+                  [disabled]="!signupForm.valid"
                 >
                   Registre
                 </button>

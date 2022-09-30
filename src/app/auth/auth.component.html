@@ -1,5 +1,3 @@
-
-
 <section class="vh-100 bgImage">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -8,37 +6,59 @@
           <div class="card-body p-5 text-center">
             <h2 class="mb-5">Se connecter</h2>
 
-           <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+            <div *ngIf="isLoading">
+              <app-loading-spinner></app-loading-spinner>
+            </div>
 
-          
-            <div class="form-outline mb-4">
-             
-              <div class="shadow-lg">
-                <div class="input-group mb-3">
-                  <div class="form-floating">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="email"
-                      required
-                      email
-                      name="email"
-                      ngModel
-                    />
-                    <label for="email">Email</label>
-                  </div>
-                  <span class="input-group-text">
-                    <div class="input-group-addon">
-                      <i
-                        class="fa fa-envelope-o"
-                        style="font-size: 1.5rem; color: rgb(227, 162, 223)"
-                      ></i>
+            <app-alert
+              [message]="error"
+              [title]="'Désolé!'"
+              *ngIf="isFailed"
+            ></app-alert>
+
+
+            <form #authForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+              <div class="form-outline mb-4">
+                <div>
+                  <div class="input-group mb-3">
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="email"
+                        required
+                        email
+                        name="email"
+                        ngModel
+                        #email="ngModel"
+                      />
+                      <label for="email">Email</label>
                     </div>
-                  </span>
+                    <span class="input-group-text">
+                      <div class="input-group-addon">
+                        <i
+                          class="fa fa-envelope-o"
+                          style="font-size: 1.5rem; color: rgb(227, 162, 223)"
+                        ></i>
+                      </div>
+                    </span>
+                  </div>
+                  <span
+                    class="help-block errorStyle mt-4"
+                    *ngIf="email.errors?.['required'] && email.touched"
+                  >
+                    Ce champs est obligatoire</span
+                  >
+
+                  <span
+                    class="help-block errorStyle mt-4"
+                    *ngIf="email.errors?.['email'] && email.touched"
+                    >Adresse mail invalide! Ex: eve.holt@reqres.in</span
+                  >
                 </div>
               </div>
 
-              <div class="shadow-lg">
+              <div>
                 <div class="input-group mb-3">
                   <div class="form-floating">
                     <input
@@ -49,6 +69,8 @@
                       ngModel
                       name="password"
                       minlength="8"
+                      #password="ngModel"
+                      pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
                     />
                     <label for="password">Mot de passe</label>
                   </div>
@@ -62,50 +84,61 @@
                     </div>
                   </span>
                 </div>
+                <span
+                  class="help-block errorStyle mt-4"
+                  *ngIf="password.errors?.['required'] && password.touched"
+                >
+                  Ce champs est obligatoire</span
+                >
+                <span
+                  class="help-block errorStyle mt-4"
+                  *ngIf="password.errors?.['pattern'] && password.touched"
+                  >Un mot de passe est valide lorsqu'il contient au moins 1
+                  caractère majuscule, au moins 1 caractère minuscule, au moins
+                  1 chiffre et au minimum 8 caractères</span
+                >
               </div>
-            </div>
-
-            <div class="form-outline mb-4">
-              <div class="shadow-lg">
-                <!-- <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="Mot de passe" /> -->
-                <!-- <label class="form-label" for="typePasswordX-2">Password</label>
-               -->
+              <!-- class="shadow-lg" -->
+              <div class="form-outline mb-4">
+                <div></div>
               </div>
-            </div>
-            <!-- Checkbox -->
-            <div class="d-flex justify-content-between">
-              <div class="form-check d-flex justify-content-start mb-4">
-                <input
-                  required
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="form1Example3"
-                />
-                <label class="form-check-label" for="form1Example3">
-                  Se souvenir de moi
-                </label>
+              <!-- Checkbox -->
+              <div class="d-flex justify-content-between">
+                <div class="form-check d-flex justify-content-start mb-4">
+                  <input
+                    required
+                    class="form-check-input me-2"
+                    type="checkbox"
+                    value=""
+                    id="form1Example3"
+                  />
+                  <label class="form-check-label" for="form1Example3">
+                    Se souvenir de moi
+                  </label>
+                </div>
+                <div class="form-check d-flex justify-content-start mb-4">
+                  <label class="form-check-label" for="form1Example3">
+                    Mot de passe oublié?
+                  </label>
+                </div>
               </div>
-              <div class="form-check d-flex justify-content-start mb-4">
-                <label class="form-check-label" for="form1Example3">
-                  Mot de passe oublié?
-                </label>
+              <div class="mt-3">
+                <button
+                  class="btn btn-lg btn-block d-grid gap-2 col-6 mx-auto"
+                  style="color: white; background-color: rgb(227, 162, 223)"
+                  type="submit"
+                  [disabled]="!authForm.valid"
+                >
+                  Se connecter
+                </button>
               </div>
-            </div>
-            <div class="mt-3">
-              <button
-                class="btn btn-lg btn-block d-grid gap-2 col-6 mx-auto"
-                style="color: white; background-color: rgb(227, 162, 223)"
-                type="submit"
-                [disabled]="!authForm.valid"
-              >
-                Se connecter
-              </button>
-            </div>
-          </form>
+            </form>
             <div class="mt-5">
               <label class="form-label" for="form1Example3">
-                Avez-vous un compte? <span style="color: rgb(227, 162, 223);"><a routerLink="/signup">S'inscrire</a> </span>
+                Avez-vous un compte?
+                <span style="color: rgb(227, 162, 223)"
+                  ><a routerLink="/signup">S'inscrire</a>
+                </span>
               </label>
             </div>
           </div>

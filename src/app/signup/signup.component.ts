@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: "app-signup",
@@ -10,25 +10,39 @@ import { AuthService } from "../auth/auth.service";
 export class SignupComponent implements OnInit {
   @ViewChild("signupForm") signupForm: NgForm | undefined;
   constructor(private authService: AuthService) {}
+  isSuccess = false;
+  isFailed = false;
+  isLoading = false;
+  error: string = "";
+  success : string = "La création d'un nouveau compte a été effectuée avec succès"
 
   ngOnInit(): void {}
 
-  // onSubmit(form: NgForm) {
-  //   console.log(form.value);
-  //   const email = form.value.email;
-  //   const password = form.value.password;
-  //   // this.authService.signup(email,password).subscribe(resData => {
-  //   //   console.log('resData',resData);
-  //   // },
-  //   // error => {
-  //   //   console.log('error', error);
-  //   //}
-  //   //)
-  //   // form.reset();
-  // }
+  onSubmit() {
+    console.log(this.signupForm?.form);
+    this.isLoading = true;
+    const email = this.signupForm?.form.value.email;
+    const password = this.signupForm?.form.value.password;
+    this.authService.signup(email, password).subscribe(
+      (resData) => {
+        console.log("resData", resData);
+        this.isLoading = false;
+        this.isSuccess = true;
 
-  onSubmit(){
-    console.log(this.signupForm);
-    
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 4000);
+      },
+      (errorMessage) => {
+        console.log("errorMessage", errorMessage);
+        this.isLoading = false;
+        this.isFailed = true;
+        setTimeout(() => {
+          this.isFailed = false;
+        }, 6000);
+        this.error = errorMessage;
+      }
+    );
+    this.signupForm?.reset();
   }
 }
