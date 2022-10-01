@@ -3,7 +3,7 @@ import { AuthToken } from "src/app/communComponents/auth.model";
 
 export const LOGIN_START = "[Auth] Login Start";
 export const LOGIN = "[Auth] Login";
-export const LOGIN_FAIL = '[Auth] Login Fail'
+export const LOGIN_FAIL = "[Auth] Login Fail";
 
 export class OnLogin implements Action {
   readonly type = LOGIN;

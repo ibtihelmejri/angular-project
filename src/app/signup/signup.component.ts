@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { AuthService } from "../services/auth.service";
+import { Store } from "@ngrx/store";
+import * as fromApp from "../store/app.reducer";
+import * as SignupActions from "./store/signup.actions";
 
 @Component({
   selector: "app-signup",
@@ -9,40 +11,42 @@ import { AuthService } from "../services/auth.service";
 })
 export class SignupComponent implements OnInit {
   @ViewChild("signupForm") signupForm: NgForm | undefined;
-  constructor(private authService: AuthService) {}
+  constructor(private store: Store<fromApp.AppState>) {}
   isSuccess = false;
   isFailed = false;
   isLoading = false;
   error: string = "";
-  success : string = "La création d'un nouveau compte a été effectuée avec succès"
+  success: string = "";
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.select("signup").subscribe((signupState) => {
+      this.isLoading = signupState.loading;
+      this.error = signupState.signupError!;
+      this.success = signupState.signupSuccess!;
 
-  onSubmit() {
-    console.log(this.signupForm?.form);
-    this.isLoading = true;
-    const email = this.signupForm?.form.value.email;
-    const password = this.signupForm?.form.value.password;
-    this.authService.signup(email, password).subscribe(
-      (resData) => {
-        console.log("resData", resData);
-        this.isLoading = false;
-        this.isSuccess = true;
-
-        setTimeout(() => {
-          this.isSuccess = false;
-        }, 4000);
-      },
-      (errorMessage) => {
-        console.log("errorMessage", errorMessage);
-        this.isLoading = false;
+      if (this.error) {
         this.isFailed = true;
         setTimeout(() => {
           this.isFailed = false;
-        }, 6000);
-        this.error = errorMessage;
+        }, 4000);
       }
+      if (this.success) {
+        this.isSuccess = true;
+        setTimeout(() => {
+          this.isSuccess = false;
+        }, 4000);
+      }
+    });
+  }
+
+  onSubmit() {
+    const email = this.signupForm?.form.value.email;
+    const password = this.signupForm?.form.value.password;
+    this.isLoading = true;
+
+    this.store.dispatch(
+      new SignupActions.SignupStart({ email: email, password: password })
     );
-    this.signupForm?.reset();
+    this.signupForm?.form.reset();
   }
 }

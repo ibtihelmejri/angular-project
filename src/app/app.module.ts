@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {StoreModule} from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import {StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,8 @@ import { SharedModule } from './communComponents/shared.module';
 import { SignupModule } from './signup/signup.module';
 import { appReducer } from './store/app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
+import { SignupEffects } from './signup/store/signup.effects';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { AuthEffects } from './auth/store/auth.effects';
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, SignupEffects]),
+    StoreDevtoolsModule.instrument({logOnly: environment.production}),
     FormsModule,
     AuthModule,
     SharedModule,
