@@ -1,18 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import {User} from '../user.model'
+import { Component, OnInit } from "@angular/core";
+import { UserModel } from "../user.model";
+import { Store } from "@ngrx/store";
+import * as fromApp from "../../store/app.reducer";
+import { Router } from "@angular/router";
+
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  selector: "app-user-list",
+  templateUrl: "./user-list.component.html",
+  styleUrls: ["./user-list.component.css"],
 })
 export class UserListComponent implements OnInit {
-  recipes: User[] = [
-    new User('A Test Recipe', 'This is simply a test', 'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg'),
-    new User('A Test Recipe', 'This is simply a test', 'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg')
-  ];
-  constructor() { }
+  users: UserModel[] = [];
+
+  constructor(private store: Store<fromApp.AppState>, private router: Router) {}
 
   ngOnInit(): void {
+    this.store.select("user").subscribe((userState) => {
+      this.users = userState.users;
+    });
   }
 
+  onUserSelected(user: UserModel) {
+    this.router.navigate([`user-management/${user.id}/details`]);
+  }
 }

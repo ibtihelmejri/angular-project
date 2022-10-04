@@ -1,28 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../services/user.service';
-
+import { Component, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import * as fromApp from "../store/app.reducer";
+import * as UserActions from "./store/user.actions";
 
 @Component({
-  selector: 'app-user-management',
-  templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.css']
+  selector: "app-user-management",
+  templateUrl: "./user-management.component.html",
+  styleUrls: ["./user-management.component.css"],
 })
 export class UserManagementComponent implements OnInit {
-  error = null;
-
-  constructor(private http: HttpClient, private usersService: UsersService) {}
+  constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {
-    this.usersService.fetchUsers().subscribe(
-      users => {
-        console.log('in component------ ', users);
-        
-      },
-      error => {
-        this.error = error.message;
-      }
-    );
+    this.store.dispatch(new UserActions.GetUsers());
   }
-
 }
