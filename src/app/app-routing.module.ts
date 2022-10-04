@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { UserDetailsComponent } from "./user-management/user-details/user-details.component";
 import { UserManagementComponent } from "./user-management/user-management.component";
 
 const appRoutes: Routes = [
@@ -13,7 +14,13 @@ const appRoutes: Routes = [
     loadChildren: () =>
       import("./signup/signup.module").then((m) => m.SignupModule),
   },
-  { path: "user-management", component: UserManagementComponent },
+  {
+    path: "user-management",
+    loadChildren: () =>
+      import("./user-management/user.module").then((m) => m.UserModule),
+  },
+  // { path: "user-management", component: UserManagementComponent },
+  // { path: "user-management/detail", component: UserDetailsComponent },
 ];
 
 @NgModule({
