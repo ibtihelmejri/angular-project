@@ -15,6 +15,8 @@ export class AuthComponent implements OnInit {
   isFailed = false;
   isLoading = false;
   error: string = "";
+  showPassword = true;
+  type="password";
   constructor(private router: Router, private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {
@@ -43,5 +45,11 @@ export class AuthComponent implements OnInit {
       new AuthActions.LoginStart({ email: email, password: password })
     );
     this.authForm?.form.reset();
+  }
+
+  onShow(){
+    this.showPassword = !this.showPassword;
+    this.type = !this.showPassword ? 'text' : 'password';
+    
   }
 }

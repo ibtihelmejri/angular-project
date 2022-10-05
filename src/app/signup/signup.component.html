@@ -11,10 +11,17 @@
               <p>La création d'un nouveau compte a été effectuée avec succès</p>
             </div> -->
 
-            <app-alert [message]="success" [title]="'Succès!'" *ngIf="isSuccess"></app-alert>
+            <app-alert
+              [message]="success"
+              [title]="'Succès!'"
+              *ngIf="isSuccess"
+            ></app-alert>
 
-
-            <app-alert [message]="error" [title]="'Désolé!'" *ngIf="isFailed"></app-alert>
+            <app-alert
+              [message]="error"
+              [title]="'Désolé!'"
+              *ngIf="isFailed"
+            ></app-alert>
 
             <div *ngIf="isLoading">
               <app-loading-spinner></app-loading-spinner>
@@ -66,7 +73,7 @@
                   <div class="input-group my-3">
                     <div class="form-floating">
                       <input
-                        type="text"
+                        type="{{ type }}"
                         class="form-control"
                         id="password"
                         required
@@ -80,11 +87,18 @@
                     </div>
                     <span class="input-group-text">
                       <div class="input-group-addon">
-                        <!-- <i class="bi bi-eye"></i> -->
-                        <i
-                          class="bi bi-eye-slash"
-                          style="font-size: 1.5rem; color: rgb(227, 162, 223)"
-                        ></i>
+                        <a (click)="onShow()">
+                          <i
+                            class="bi bi-eye-slash"
+                            style="font-size: 1.5rem; color: rgb(227, 162, 223)"
+                            [hidden]="!showPassword"
+                          ></i>
+                          <i
+                            class="bi bi-eye"
+                            style="font-size: 1.5rem; color: rgb(227, 162, 223)"
+                            [hidden]="showPassword"
+                          ></i>
+                        </a>
                       </div>
                     </span>
                   </div>
