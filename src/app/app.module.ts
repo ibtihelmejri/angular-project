@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
@@ -18,6 +18,9 @@ import { SignupEffects } from "./signup/store/signup.effects";
 import { environment } from "../environments/environment";
 import { UserEffects } from "./user-management/store/user.effects";
 import { UserModule } from "./user-management/user.module";
+import { AuthService } from "./services/auth.service";
+import { AuthGuard } from "./auth.guard";
+import { AuthInterceptorService } from "./auth-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -38,7 +41,7 @@ import { UserModule } from "./user-management/user.module";
     SignupModule,
     UserModule
   ],
-  providers: [],
+  providers: [AuthService,AuthGuard, {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptorService, multi:true}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

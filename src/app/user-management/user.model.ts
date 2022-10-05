@@ -1,12 +1,4 @@
-// export class UserModel {
-//   constructor(
-//     public avatar: string,
-//     public email: string,
-//     public first_name: string,
-//     public id: number,
-//     public last_name: string
-//   ) {}
-// }
+
 
 export class UserModel {
     public avatar: string;

@@ -17,6 +17,8 @@ export class SignupComponent implements OnInit {
   isLoading = false;
   error: string = "";
   success: string = "";
+  showPassword = true;
+  type="password";
 
   ngOnInit(): void {
     this.store.select("signup").subscribe((signupState) => {
@@ -48,5 +50,10 @@ export class SignupComponent implements OnInit {
       new SignupActions.SignupStart({ email: email, password: password })
     );
     this.signupForm?.form.reset();
+  }
+  onShow(){
+    this.showPassword = !this.showPassword;
+    this.type = !this.showPassword ? 'text' : 'password';
+    
   }
 }

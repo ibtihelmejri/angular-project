@@ -5,6 +5,9 @@ import {UserResModel} from "../../communComponents/user_res.model";
 export const GET_USERS = "[User management] Users List";
 export const ACTION_FAIL = "[User management] Failed to get list";
 export const ACTION_SUCCESS = "[User management] Get  list with success";
+export const ADD_USER = "[User management] Add Users ";
+export const IS_SUCCESS = "[User management] Add Users with success ";
+
 
 
 
@@ -12,7 +15,6 @@ export class GetUsers implements Action {
   readonly type = GET_USERS;
 
   constructor() {
-    console.log('GetUsers***');
     
   }
 }
@@ -29,5 +31,18 @@ export class ActionFail implements Action {
     constructor(public payload: UserResModel) {}
   }
 
+  export class AddUser implements Action {
+    readonly type = ADD_USER;
+  
+    constructor(public payload: { name: string; job: string }) {}
+  }
+  export class IsSuccess implements Action {
+    readonly type = IS_SUCCESS;
+  
+    constructor(public payload: string) {}
+  }
 
-export type UserActions = GetUsers | ActionFail | ActionSuccess ;
+  
+
+
+export type UserActions = GetUsers | ActionFail | ActionSuccess| IsSuccess | AddUser ;

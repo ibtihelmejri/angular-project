@@ -16,7 +16,6 @@
               *ngIf="isFailed"
             ></app-alert>
 
-
             <form #authForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
               <div class="form-outline mb-4">
                 <div>
@@ -62,7 +61,7 @@
                 <div class="input-group mb-3">
                   <div class="form-floating">
                     <input
-                      type="text"
+                      type="{{ type }}"
                       class="form-control"
                       id="password"
                       required
@@ -76,11 +75,18 @@
                   </div>
                   <span class="input-group-text">
                     <div class="input-group-addon">
-                      <!-- <i class="bi bi-eye"></i> -->
-                      <i
-                        class="bi bi-eye-slash"
-                        style="font-size: 1.5rem; color: rgb(227, 162, 223)"
-                      ></i>
+                      <a (click)="onShow()">
+                        <i
+                          class="bi bi-eye-slash"
+                          style="font-size: 1.5rem; color: rgb(227, 162, 223)"
+                          [hidden]="!showPassword"
+                        ></i>
+                        <i
+                          class="bi bi-eye"
+                          style="font-size: 1.5rem; color: rgb(227, 162, 223)"
+                          [hidden]="showPassword"
+                        ></i>
+                      </a>
                     </div>
                   </span>
                 </div>
@@ -98,11 +104,9 @@
                   1 chiffre et au minimum 8 caractères</span
                 >
               </div>
-              <!-- class="shadow-lg" -->
               <div class="form-outline mb-4">
                 <div></div>
               </div>
-              <!-- Checkbox -->
               <div class="d-flex justify-content-between">
                 <div class="form-check d-flex justify-content-start mb-4">
                   <input

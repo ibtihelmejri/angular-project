@@ -21,51 +21,54 @@ export class AuthService {
     private store: Store<fromApp.AppState>
   ) {}
 
-  signup(email: string, password: string) {
-    return this.http
-      .post<SignupResponseData>("https://reqres.in/api/register", {
-        email: email,
-        password: password,
-      })
-      .pipe(
-        catchError(this.handleError),
-        tap((resData) => {
-          this.store.dispatch(
-            new AuthActions.OnLogin({
-              token: resData.token,
-            })
-          );
-          localStorage.setItem('kj128lio', resData.token);
+  // signup(email: string, password: string) {
+  //   return this.http
+  //     .post<SignupResponseData>("https://reqres.in/api/register", {
+  //       email: email,
+  //       password: password,
+  //     })
+  //     .pipe(
+  //       catchError(this.handleError),
+  //       tap((resData) => {
+  //         this.store.dispatch(
+  //           new AuthActions.OnLogin({
+  //             token: resData.token,
+  //           })
+  //         );
+  //         localStorage.setItem("kj128lio", resData.token);
+  //       })
+  //     );
+  // }
 
-        })
-      );
-  }
+  // onLogin(email: string, password: string) {
+  //   return this.http
+  //     .post<AuthResponseData>("https://reqres.in/api/login", {
+  //       email: email,
+  //       password: password,
+  //     })
+  //     .pipe(catchError(this.handleError));
+  // }
 
-  onLogin(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>("https://reqres.in/api/login", {
-        email: email,
-        password: password,
-      })
-      .pipe(catchError(this.handleError));
-  }
+  // private handleError(errorRes: HttpErrorResponse) {
+  //   let errorMessage = "Une erreur est survenue, merci de réessayer plus tard";
+  //   if (!errorRes.error || !errorRes.error.error) {
+  //     return throwError(errorMessage);
+  //   }
 
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = "Une erreur est survenue, merci de réessayer plus tard";
-    if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
-    }
+  //   switch (errorRes.error.error) {
+  //     case "user not found":
+  //       errorMessage = ` Utilisateur non trouvé. Merci de taper l'adresse mail suivante: eve.holt@reqres.in `;
+  //       break;
+  //     case "Note: Only defined users succeed registration":
+  //       errorMessage =
+  //         "Remarque : Seuls les utilisateurs définis réussissent l'enregistrement";
+  //       break;
+  //   }
 
-    switch (errorRes.error.error) {
-      case "user not found":
-        errorMessage = ` Utilisateur non trouvé. Merci de taper l'adresse mail suivante: eve.holt@reqres.in `;
-        break;
-      case "Note: Only defined users succeed registration":
-        errorMessage =
-          "Remarque : Seuls les utilisateurs définis réussissent l'enregistrement";
-        break;
-    }
+  //   return throwError(errorMessage);
+  // }
 
-    return throwError(errorMessage);
+  loggedIn() {
+    return !!localStorage.getItem("OOPgtd563");
   }
 }
