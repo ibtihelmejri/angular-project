@@ -22,12 +22,12 @@ export class AuthEffects {
           })
           .pipe(
             map((resData) => {
+              localStorage.setItem("OOPgtd563", resData.token);
               return new AuthActions.OnLogin({
                 token: resData.token,
               });
             }),
             catchError((errorRes) => {
-              console.log("!errorRes.error", errorRes);
 
               let errorMessage =
                 "Une erreur est survenue, merci de réessayer plus tard";

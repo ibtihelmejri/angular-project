@@ -18,6 +18,8 @@ import { SignupEffects } from "./signup/store/signup.effects";
 import { environment } from "../environments/environment";
 import { UserEffects } from "./user-management/store/user.effects";
 import { UserModule } from "./user-management/user.module";
+import { AuthService } from "./services/auth.service";
+import { AuthGuard } from "./auth.guard";
 
 @NgModule({
   declarations: [
@@ -38,7 +40,7 @@ import { UserModule } from "./user-management/user.module";
     SignupModule,
     UserModule
   ],
-  providers: [],
+  providers: [AuthService,AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
