@@ -4,12 +4,7 @@
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card shadow-2-strong" style="border-radius: 1rem">
           <div class="card-body p-5 text-center">
-            <h2 class="mb-5">Créer un compte</h2>
-
-            <!-- <div *ngIf="isSuccess" class="alert alert-success" role="alert">
-              <h4 class="alert-heading">Succès!</h4>
-              <p>La création d'un nouveau compte a été effectuée avec succès</p>
-            </div> -->
+            <h2 class="mb-5" >Créer un compte</h2>
 
             <app-alert
               [message]="success"
@@ -29,7 +24,6 @@
             <form
               #signupForm="ngForm"
               (ngSubmit)="onSubmit()"
-              *ngIf="!isLoading"
             >
               <div class="form-outline mb-4">
                 <div>
