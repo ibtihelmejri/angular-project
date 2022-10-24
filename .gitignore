@@ -14,7 +14,7 @@
 .idea
 .project
 .strong-pm
-node_modules
+/node_modules
 npm-debug.log
 build
 # Coverage directory used by tools like istanbul
