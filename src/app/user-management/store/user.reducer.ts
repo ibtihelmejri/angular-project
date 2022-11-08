@@ -21,9 +21,11 @@ export function userReducer(
 ): userState {
   switch (action.type) {
     case UserActions.ACTION_SUCCESS:
+      console.log('action.payload',action.payload);
+      
       return {
         ...state,
-        users: action.payload.data,
+         users: action.payload,
       };
     case UserActions.IS_SUCCESS:
       return {

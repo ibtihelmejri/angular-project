@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import { UserModel } from "../user.model";
-import {UserResModel} from "../../communComponents/user_res.model";
+// import {UserResModel} from "../../communComponents/user_res.model";
 
 export const GET_USERS = "[User management] Users List";
 export const ACTION_FAIL = "[User management] Failed to get list";
@@ -28,12 +28,13 @@ export class ActionFail implements Action {
   export class ActionSuccess implements Action {
     readonly type = ACTION_SUCCESS;
   
-    constructor(public payload: UserResModel) {}
+    constructor(public payload: UserModel[]) {
+
+    }
   }
 
   export class AddUser implements Action {
     readonly type = ADD_USER;
-  
     constructor(public payload: { name: string; job: string }) {}
   }
   export class IsSuccess implements Action {
