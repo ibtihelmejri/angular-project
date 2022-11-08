@@ -25,7 +25,7 @@ export class UserDetailsComponent implements OnInit {
       this.id = params["id"];
       this.store.select("user").subscribe((userState) => {
         this.userSelected = userState.users.filter(
-          (item) => item.id === +this.id
+          (item) => item.id === this.id
         );
         this.user = this.userSelected[0];
       });
