@@ -3,16 +3,16 @@
 export class UserModel {
     public avatar: string;
     public email: string;
-    public first_name: string;
+    public firstname: string;
     public id: number;
-    public last_name: string
+    public lastname: string
 
-  constructor(avatar: string, email: string, first_name: string, id: number, last_name: string) {
+  constructor(avatar: string, email: string, firstname: string, id: number, lastname: string) {
     this.avatar = avatar;
     this.email = email;
-    this.first_name = first_name;
+    this.firstname = firstname;
     this.id = id;
-    this.last_name = last_name;
+    this.lastname = lastname;
 
   }
 }

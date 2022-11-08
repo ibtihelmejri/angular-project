@@ -10,14 +10,16 @@ export interface SignupResponseData {
   token: string;
 }
 
+
 @Injectable()
 export class SignupEffects {
+  
   authSignup = createEffect(() =>
     this.actionsSignup$.pipe(
       ofType(SignupActions.SIGNUP_START),
       switchMap((signupData: SignupActions.SignupStart) => {
         return this.http
-          .post<SignupResponseData>("https://reqres.in/api/register", {
+          .post<SignupResponseData>("http://localhost:3000/api/register", {
             email: signupData.payload.email,
             password: signupData.payload.password,
           })
